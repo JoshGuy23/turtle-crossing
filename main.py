@@ -3,9 +3,6 @@ from turtle import Screen
 from player import Player
 from car_manager import CarManager
 from scoreboard import Scoreboard
-# TODO: Create a scoreboard that keeps track of which level the user is on.
-#  Every time the turtle player does a successful crossing, the level should increase.
-#  When the turtle hits a car, GAME OVER should be displayed in the centre.
 
 
 def setup_screen():
@@ -20,6 +17,7 @@ def play_game():
     screen = setup_screen()
     player = Player()
     manager = CarManager()
+    scoreboard = Scoreboard()
 
     screen.listen()
     screen.onkey(fun=player.move, key="Up")
@@ -34,10 +32,12 @@ def play_game():
         for car in manager.car_list:
             if player.distance(car) < 20:
                 game_is_on = False
+                scoreboard.game_over()
 
         if player.reached_end():
             player.restart()
             manager.increase_speed()
+            scoreboard.advance_level()
     screen.exitonclick()
 
 
