@@ -4,8 +4,6 @@ from player import Player
 from car_manager import CarManager
 from scoreboard import Scoreboard
 
-# TODO: Detect when the turtle player collides with a car and stop the game if this happens.
-
 # TODO: Detect when the turtle player has reached the top edge of the screen
 #  (i.e., reached the FINISH_LINE_Y).
 #  When this happens, return the turtle to the starting position and increase the speed of the cars.
@@ -32,17 +30,16 @@ def play_game():
     screen.listen()
     screen.onkey(fun=player.move, key="Up")
 
-    loop_counter = 1
     game_is_on = True
     while game_is_on:
-        if loop_counter == 6:
-            manager.generate()
-            loop_counter = 1
+        manager.generate()
 
         time.sleep(0.1)
         manager.move()
         screen.update()
-        loop_counter += 1
+        for car in manager.car_list:
+            if player.distance(car) < 20:
+                game_is_on = False
     screen.exitonclick()
 
 
