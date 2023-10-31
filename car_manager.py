@@ -34,3 +34,6 @@ class CarManager:
                 car.reset()
                 car.color("white")
                 self.car_list.remove(car)
+
+    def increase_speed(self):
+        self.speed += MOVE_INCREMENT
