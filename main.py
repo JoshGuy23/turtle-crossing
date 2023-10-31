@@ -3,11 +3,6 @@ from turtle import Screen
 from player import Player
 from car_manager import CarManager
 from scoreboard import Scoreboard
-# TODO: Create cars that are 20px high by 40px wide that are randomly generated along the y-axis,
-#  and move to the left edge of the screen.
-#  No cars should be generated in the top and bottom 50px of the screen
-#  (think of it as a safe zone for our little turtle). (Generate range: 230 to -230)
-#  Hint: generate a new car only every 6th time the game loop runs.
 
 # TODO: Detect when the turtle player collides with a car and stop the game if this happens.
 
@@ -32,13 +27,22 @@ def setup_screen():
 def play_game():
     screen = setup_screen()
     player = Player()
+    manager = CarManager()
 
     screen.listen()
     screen.onkey(fun=player.move, key="Up")
+
+    loop_counter = 1
     game_is_on = True
     while game_is_on:
+        if loop_counter == 6:
+            manager.generate()
+            loop_counter = 1
+
         time.sleep(0.1)
+        manager.move()
         screen.update()
+        loop_counter += 1
     screen.exitonclick()
 
 
